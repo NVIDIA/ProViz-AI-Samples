@@ -9,11 +9,10 @@ An accompanying blogpost for this sample can be found in the 4. blogpost of our 
 For documentation of the code please read inline comments. 
 Especially in the `main()` in [cuda_sample.cpp](./cuda_provider/src/cuda_sample.cpp) the core ideas on the processing pipeline are documented.
 
-### Disclaimer on Achieving correct asynchronous compute
 
-For now, it is important to note that asynchronous processing is not supported with the public release of ORT.
-It can easily be enabled by compiling the code of this [pull request](https://github.com/microsoft/onnxruntime/pull/14088) and providing the respective installation as `-Donnxruntime_INSTALL="<install path>"`.
-When doing this please uncomment the respective API function [here](./cuda_provider/src/NVIDIAInference.cpp) line 76.
+**NOTE:** It is important to note that asynchronous processing is only supported for CUDA since the 1.14 release. 
+To check the difference with and without please uncomment the respective API function [here](./cuda_provider/src/NVIDIAInference.cpp) line 76.
+The effect can be best seen by attaching Nsight Systems to the App.
 
 ## High level AI pipeline
 

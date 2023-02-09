@@ -72,8 +72,8 @@ void NVInference::runAsync(Ort::Value *input, Ort::RunOptions *run_options) {
     io_binding.BindOutput(name.get(), *m_input_tensor);
   }
 
-  // TODO enable this after https://github.com/microsoft/onnxruntime/pull/14088
-  //    run_options->AddConfigEntry("synchronize_execution_providers", "0");
+
+  run_options->AddConfigEntry("disable_synchronize_execution_providers", "1");
   m_session->Run(*run_options, io_binding);
   if (!m_preprocessing) {
     /// This event guarantees that we can overwrite the input buffer
