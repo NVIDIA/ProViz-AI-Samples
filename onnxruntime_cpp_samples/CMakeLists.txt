@@ -7,9 +7,9 @@ set(CXX_STANDARD 20)
 
 if (NOT DEFINED onnxruntime_INSTALL)
     if (UNIX)
-        set(ORT_RELEASE "https://github.com/microsoft/onnxruntime/releases/download/v1.13.1/onnxruntime-linux-x64-gpu-1.13.1.tgz")
+        set(ORT_RELEASE "https://github.com/microsoft/onnxruntime/releases/download/v1.14.0/onnxruntime-linux-x64-gpu-1.14.0.tgz")
     else ()
-        set(ORT_RELEASE "https://github.com/microsoft/onnxruntime/releases/download/v1.13.1/onnxruntime-win-x64-gpu-1.13.1.zip")
+        set(ORT_RELEASE "https://github.com/microsoft/onnxruntime/releases/download/v1.14.0/onnxruntime-win-x64-gpu-1.14.0.zip")
     endif ()
 
     include(FetchContent)
