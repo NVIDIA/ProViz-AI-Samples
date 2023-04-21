@@ -245,7 +245,7 @@ E2EError OrtInference::InitPostProcessCommands() {
 
   E2EError out_err = NO_E2E_ERROR;
   int64_t wh_dim = m_input_image.height * m_output_scale_factor;
-  int64_t dml_shape_uint[] = {1, 3, wh_dim, wh_dim};
+  int64_t dml_shape_uint[] = {1, m_input_image.channels, wh_dim, wh_dim};
   int64_t dml_shape_float[] = {1, 8, wh_dim, wh_dim};
 
   m_cmd_list_stage_output = m_copy_queue->GetCmdList();
@@ -335,15 +335,15 @@ E2EError OrtInference::InitPostProcessCommands() {
       0, m_post_process_heap->GetGPUDescriptorHandleForHeapStart());
   m_cmd_list_postprocess_output->SetComputeRoot32BitConstant(
       1, (wh_dim * wh_dim), 0);
-  m_cmd_list_postprocess_output->SetComputeRoot32BitConstant(1, 3, 1);
-  m_cmd_list_postprocess_output->SetComputeRoot32BitConstant(1, 3, 2);
+  m_cmd_list_postprocess_output->SetComputeRoot32BitConstant(1, m_input_image.channels, 1);
+  m_cmd_list_postprocess_output->SetComputeRoot32BitConstant(1, m_input_image.channels, 2);
   m_cmd_list_postprocess_output->SetComputeRoot32BitConstant(1, 0, 3);
 
   /*
           Dispatch the kernel.
   */
 
-  size_t total_threads = 1 * 3 * wh_dim * wh_dim;
+  size_t total_threads = 1 * m_input_image.channels * wh_dim * wh_dim;
   size_t group_size = 256;
   size_t group_count = (total_threads + group_size - 1) / group_size;
 
@@ -366,7 +366,7 @@ E2EError OrtInference::InitPreprocessCommands() {
   E2EError out_err = NO_E2E_ERROR;
   m_cmd_list_stage_input = m_copy_queue->GetCmdList();
 
-  int64_t dml_shape_uint[] = {1, 3, m_input_image.height, m_input_image.width};
+  int64_t dml_shape_uint[] = {1, m_input_image.channels, m_input_image.height, m_input_image.width};
   int64_t dml_shape_float[] = {1, 8, m_input_image.height, m_input_image.width};
 
   ONNXTensorElementDataType input_data_type = GetInputDataType();
@@ -467,7 +467,7 @@ E2EError OrtInference::InitPreprocessCommands() {
       0, m_pre_process_heap->GetGPUDescriptorHandleForHeapStart());
   m_cmd_list_preprocess_input->SetComputeRoot32BitConstant(
       1, (m_input_image.height * m_input_image.width), 0);
-  m_cmd_list_preprocess_input->SetComputeRoot32BitConstant(1, 3, 1);
+  m_cmd_list_preprocess_input->SetComputeRoot32BitConstant(1, m_input_image.channels, 1);
   m_cmd_list_preprocess_input->SetComputeRoot32BitConstant(1, 8, 2);
   m_cmd_list_preprocess_input->SetComputeRoot32BitConstant(1, 0, 3);
 
@@ -555,8 +555,6 @@ E2EError OrtInference::Run(void **inBuffers) {
   m_copy_queue->ExecuteCommandList(m_cmd_list_stage_output);
   m_copy_queue->Flush();
 
-  for (uint32_t i = 0; i < 5; ++i) {
-
     // UINT64 gpuTimestampBegin;
     // UINT64 cpuTimestampBegin;
     // UINT64 gpuTimestampEnd;
@@ -593,7 +591,6 @@ E2EError OrtInference::Run(void **inBuffers) {
     // " GPU : " << (gpuTimestampEnd - gpuTimestampBegin));
 
     // Run the model
-  }
 
   return out_err;
 }

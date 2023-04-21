@@ -71,7 +71,8 @@ int main(int argc, const char *const argv[]) {
 
     ort_inf.SaveResult(output_image_path.string().c_str());
   } catch (std::runtime_error &e) {
-    std::cerr << e.what() << std::endl;
+    std::cerr << "ERROR: " << e.what() << std::endl;
   };
+  std::cout << "DONE" << std::endl;
   return 0;
 }
