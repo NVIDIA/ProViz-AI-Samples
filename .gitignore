@@ -11,6 +11,9 @@
 *.gch
 *.pch
 
+# Precompiled shaders
+*.cso
+
 # Compiled Dynamic libraries
 *.so
 *.dylib
