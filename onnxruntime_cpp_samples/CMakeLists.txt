@@ -32,3 +32,6 @@ target_link_libraries(onnxruntime_interface INTERFACE onnxruntime)
 
 add_subdirectory(common)
 add_subdirectory(cuda_provider)
+if (WIN32)
+add_subdirectory(dml_provider)
+endif()
