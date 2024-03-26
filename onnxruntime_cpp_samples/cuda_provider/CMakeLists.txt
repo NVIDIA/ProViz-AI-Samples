@@ -23,6 +23,7 @@ target_link_libraries(cuda_sample PRIVATE
 
 # https://github.com/microsoft/onnxruntime/issues/11236
 if (WIN32)
+    include(FetchContent)
     FetchContent_Declare(zlib_dll
             URL http://www.winimage.com/zLibDll/zlib123dllx64.zip)
     FetchContent_MakeAvailable(zlib_dll)
