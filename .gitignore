@@ -159,6 +159,7 @@ bld/
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
+**/build/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
@@ -444,7 +445,7 @@ _Pvt_Extensions
 # Paket dependency manager
 .paket/paket.exe
 paket-files/
-
+      
 # FAKE - F# Make
 .fake/
 
