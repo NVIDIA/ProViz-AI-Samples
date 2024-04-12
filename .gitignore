@@ -445,9 +445,6 @@ _Pvt_Extensions
 # Paket dependency manager
 .paket/paket.exe
 paket-files/
-
-# FetchContent _deps 
-_deps/
       
 # FAKE - F# Make
 .fake/
